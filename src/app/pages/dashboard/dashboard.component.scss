@@ -1,0 +1,47 @@
+header {
+    width: 100%;
+    height: 220px;
+    background-color: #25476A;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    color: white;
+
+    h2 {
+        font-size: 1.6rem;
+        margin-bottom: 0;
+    }
+
+}
+
+.container {
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -2%;
+}
+
+.thiry-days-messages-n-users-info {
+    display: grid;
+    grid-template-columns: 2.8fr 1fr;
+    grid-column-gap: 1.2rem;
+    align-items: flex-start;
+    margin-bottom: 1.2rem;
+}
+
+.user-per-channel-n-most-tagged {
+    display: grid;
+    grid-template-columns: 1fr 2.4fr;
+    grid-column-gap: 1.2rem;
+    align-items: flex-start;
+    margin-bottom: 1.2rem;
+}
+
+.basic-info {
+    .info-card {
+        margin-bottom: 1.2rem;
+    }
+}

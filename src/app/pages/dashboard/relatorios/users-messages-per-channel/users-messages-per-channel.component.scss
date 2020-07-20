@@ -1,0 +1,24 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    // span {
+    //     font-size: 1.2rem;
+    // }
+}
+
+.relatorio {
+    width: 520px;
+
+    .no-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        color: #909090;
+
+        padding: 2rem 0rem;
+    }
+}

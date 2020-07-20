@@ -1,0 +1,14 @@
+<dash-card>
+    <dash-card-header>
+        Usuários mais mencionados
+    </dash-card-header>
+    <dash-card-content>
+        <div *ngIf="isReady" style="margin-top: 1rem;">
+            <canvas baseChart height="90px"
+            [datasets]="data"
+            [legend]="true"
+            [options]="barChartOptions"
+            [chartType]="barChartType"></canvas>
+        </div>
+    </dash-card-content>
+</dash-card>

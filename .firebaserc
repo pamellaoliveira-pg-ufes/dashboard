@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "webchat-dashboard": {
+      "hosting": {
+        "dashboard2": [
+          "webchat-dashboard"
+        ]
+      }
+    }
+  }
+}
