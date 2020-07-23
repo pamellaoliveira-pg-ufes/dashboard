@@ -27,7 +27,7 @@ export class LastSendedMessageElapsedTimeComponent implements OnInit {
   userLastSendedMessage$: Observable<{ name: string, lastMessageElapsedTime: string }[]>;
 
   currentPage = 0;
-  pageSize = 8;
+  pageSize = 5;
 
   constructor(private channelService: ChannelService,
     private messageService: MessageService,

@@ -22,13 +22,14 @@ header {
     margin-left: auto;
     margin-right: auto;
     margin-top: -2%;
+    padding-bottom: 2rem;
 }
 
 .thiry-days-messages-n-users-info {
     display: grid;
     grid-template-columns: 2.8fr 1fr;
     grid-column-gap: 1.2rem;
-    align-items: flex-start;
+    align-items: center;
     margin-bottom: 1.2rem;
 }
 
@@ -44,4 +45,16 @@ header {
     .info-card {
         margin-bottom: 1.2rem;
     }
+}
+
+.relatorio2-n-channel-user-count {
+    display: grid;
+    grid-template-columns: 1fr 2.4fr;
+    grid-column-gap: 1.2rem;
+    align-items: flex-start;
+    margin-bottom: 1.2rem;
+}
+
+.dash-messages-count-per-hour {
+    margin-bottom: 1.2rem;
 }

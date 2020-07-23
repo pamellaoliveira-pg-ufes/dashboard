@@ -20,7 +20,7 @@ export class MessagesInLastThirtyDaysCountComponent implements OnInit {
   msgCount$ = this.messageService.getMessage()
     .pipe(map(messages => {
       return messages
-        .filter(msg => msgDateOnRange(msg, this.thirtyDaysAgo, this.today))
+        .filter(msg => msgDateOnRange(msg, this.thirtyDaysAgo, this.today.add(1, 'day')))
     }),
     map(messages => messages.length));
 

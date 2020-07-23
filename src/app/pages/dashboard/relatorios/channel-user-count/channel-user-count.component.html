@@ -1,0 +1,15 @@
+<dash-card>
+    <dash-card-header>
+        Divisão de alunos por canal
+    </dash-card-header>
+    <dash-card-content>
+        <div *ngIf="isDataAvailable" style="margin-top: 1rem;">
+            <canvas baseChart height="90px"
+                [data]="pieChartData" 
+                [labels]="pieChartLabels" 
+                [chartType]="pieChartType"
+                [legend]="pieChartLegend">
+            </canvas>
+        </div>
+    </dash-card-content>
+</dash-card>

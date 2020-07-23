@@ -1,0 +1,14 @@
+<dash-card>
+    <dash-card-header>
+        Numero Mensagens X hora nos ultimos 30 dias
+    </dash-card-header>
+    <dash-card-content>
+        <div *ngIf="isDataAvailable" style="margin-top: 1rem;">
+            <canvas baseChart height="90px"
+            [datasets]="data"
+            [labels]="labels"
+            [legend]="false"
+            [chartType]="lineChartType"></canvas>
+        </div>
+    </dash-card-content>
+</dash-card>

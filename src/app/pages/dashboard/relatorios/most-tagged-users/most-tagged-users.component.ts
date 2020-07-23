@@ -79,7 +79,7 @@ export class MostTaggedUsersComponent implements OnInit {
     this.mostTaggedUsers$
       .subscribe(items => {
         this.data = items
-          .map(item => { return { label: `${item.user.firstName} ${item.user.lastName}`, data: [item.tagCount] } });
+          .map(item => { return { label: `${item.user?.firstName} ${item.user?.lastName}`, data: [item.tagCount] } });
 
         const biggest = items
           .sort((a, b) => a.tagCount - b.tagCount)

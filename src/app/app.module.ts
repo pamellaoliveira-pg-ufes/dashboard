@@ -19,6 +19,9 @@ import { MessagesInLastThirtyDaysComponent } from './pages/dashboard/relatorios/
 import { OnlineUsersComponent } from './pages/dashboard/relatorios/online-users/online-users.component';
 import { OfflineUsersComponent } from './pages/dashboard/relatorios/offline-users/offline-users.component';
 import { MessagesInLastThirtyDaysCountComponent } from './pages/dashboard/relatorios/messages-in-last-thirty-days-count/messages-in-last-thirty-days-count.component';
+import { ChannelUserCountComponent } from './pages/dashboard/relatorios/channel-user-count/channel-user-count.component';
+import { MessagesCountPerHourComponent } from './pages/dashboard/relatorios/messages-count-per-hour/messages-count-per-hour.component';
+import { MostMentionedByOwnerUsersComponent } from './pages/dashboard/relatorios/most-mentioned-by-owner-users/most-mentioned-by-owner-users.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,10 @@ import { MessagesInLastThirtyDaysCountComponent } from './pages/dashboard/relato
     MessagesInLastThirtyDaysComponent,
     OnlineUsersComponent,
     OfflineUsersComponent,
-    MessagesInLastThirtyDaysCountComponent
+    MessagesInLastThirtyDaysCountComponent,
+    ChannelUserCountComponent,
+    MessagesCountPerHourComponent,
+    MostMentionedByOwnerUsersComponent
   ],
   imports: [
     BrowserModule,

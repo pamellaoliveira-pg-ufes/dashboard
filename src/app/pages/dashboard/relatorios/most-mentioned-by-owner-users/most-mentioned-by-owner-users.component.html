@@ -1,0 +1,25 @@
+<dash-card>
+    <dash-card-header>
+        <div class="header">
+            <span>Alunos mais acionados por mediador</span>
+            <mat-form-field class="form-field">
+                <mat-label>Selecione o canal</mat-label>
+                <mat-select (valueChange)="updateCurrentChannel($event)">
+                    <mat-option *ngFor="let channel of (channels$ | async)" [value]="channel">
+                        {{ channel.title }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </dash-card-header>
+    <dash-card-content>
+        <div *ngIf="isDataAvailable && data?.length > 0" style="margin-top: 1rem;">
+            <canvas baseChart height="90px"
+                [datasets]="data"
+                [legend]="true"
+                [options]="barChartOptions"
+                [chartType]="barChartType">
+            </canvas>
+        </div>
+    </dash-card-content>
+</dash-card>

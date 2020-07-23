@@ -25,7 +25,7 @@ export class UsersMessagesPerChannelComponent implements OnInit {
   channelUsersMessagesCount$: Observable<{ name: string, msgCount: number }[]>;
 
   currentPage = 0;
-  pageSize = 8;
+  pageSize = 5;
 
   constructor(private channelService: ChannelService,
     private messageService: MessageService,
@@ -34,7 +34,6 @@ export class UsersMessagesPerChannelComponent implements OnInit {
   ngOnInit(): void {
     this.channelUsersMessagesCount$ = combineLatest(this.messageService.getMessage(), this.currentChannel$)
       .pipe(
-        tap(() => console.log("ahahh bla bla bla blu")),
         map(values => {
           const channel = values[1];
           const messages = filterByChannelId(values[0], channel.id);
@@ -73,7 +72,6 @@ export class UsersMessagesPerChannelComponent implements OnInit {
             }
           });
         }),
-        tap(console.log)
       )
   }
 

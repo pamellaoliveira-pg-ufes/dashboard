@@ -18,9 +18,6 @@ export class MessagesInLastThirtyDaysComponent implements OnInit, OnDestroy {
 
   private _unsubscribeAll = new Subject();
 
-  public lineChartData: ChartDataSets[] = [
-    { data: [...Array(31).keys()].map(_ => Math.random() * 100), label: 'Messages' },];
-
   isDataAvailable:boolean = false;
   private dateLabels = [...Array(31).keys()]
     .map(x =>
@@ -33,7 +30,7 @@ export class MessagesInLastThirtyDaysComponent implements OnInit, OnDestroy {
   private data$ = this.messageService.getMessage()
     .pipe(map(messages => {
       return messages
-        .filter(msg => msgDateOnRange(msg, this.dateLabels[0], this.dateLabels[30]))
+        .filter(msg => msgDateOnRange(msg, this.dateLabels[0], moment(this.dateLabels[30]).add(1, 'day')))
     }),
       map(messages => {
         return this.dateLabels.map(date => {
@@ -55,7 +52,6 @@ export class MessagesInLastThirtyDaysComponent implements OnInit, OnDestroy {
     .map(date => date.format('MMM DD'))
     .map(dateStr => dateStr as Label);
 
-  public lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
   public lineChartType = 'line';
 
