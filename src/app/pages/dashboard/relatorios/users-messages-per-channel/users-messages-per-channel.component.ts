@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 
 import { BehaviorSubject, combineLatest, of, Observable, Subject } from 'rxjs';
-import { map, concatMap, tap, mergeMap } from 'rxjs/operators';
+import { map, concatMap, tap, mergeMap, startWith } from 'rxjs/operators';
 
 import { Channel } from 'src/app/core/models/channel';
 import { ChannelService } from 'src/app/core/services/channel.service';
-import { MessageService, filterByChannelId, groupByUsers } from 'src/app/core/services/message.service';
+import { MessageService, filterByChannelId, groupByUsers, filterByDate } from 'src/app/core/services/message.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { Message } from 'src/app/core/models/message';
 import { PageEvent } from '@angular/material/paginator';
+import { FormControl } from '@angular/forms';
+import * as moment from 'moment';
 
 @Component({
   selector: 'dash-users-messages-per-channel',
@@ -27,16 +29,20 @@ export class UsersMessagesPerChannelComponent implements OnInit {
   currentPage = 0;
   pageSize = 5;
 
+  startDate = new FormControl(moment().subtract(30, 'days'));
+  endDate = new FormControl(moment());
+
   constructor(private channelService: ChannelService,
     private messageService: MessageService,
     private userService: UserService) { }
 
   ngOnInit(): void {
-    this.channelUsersMessagesCount$ = combineLatest(this.messageService.getMessage(), this.currentChannel$)
+    this.channelUsersMessagesCount$ = combineLatest(this.messageService.getMessage(), this.currentChannel$, this.startDate.valueChanges.pipe(startWith(moment().subtract(30, 'days'))), this.endDate.valueChanges.pipe(startWith(moment())))
       .pipe(
         map(values => {
           const channel = values[1];
-          const messages = filterByChannelId(values[0], channel.id);
+          const messages = filterByChannelId(values[0], channel.id)
+            .filter(msg => filterByDate(msg, values[2], values[3]));
 
           return { messages, channel };
         }),

@@ -1,14 +1,25 @@
 <dash-card>
     <dash-card-header>
         Usuários mais mencionados
+        <div>
+            <mat-form-field style="margin-right: 1rem;">
+                <mat-label>Data inicio</mat-label>
+                <input matInput [formControl]="startDate" [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Data fim</mat-label>
+                <input matInput [formControl]="endDate" [matDatepicker]="picker2">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+        </div>
     </dash-card-header>
     <dash-card-content>
         <div *ngIf="isReady" style="margin-top: 1rem;">
-            <canvas baseChart height="90px"
-            [datasets]="data"
-            [legend]="true"
-            [options]="barChartOptions"
-            [chartType]="barChartType"></canvas>
+            <canvas baseChart height="90px" [datasets]="data" [legend]="true" [options]="barChartOptions"
+                [chartType]="barChartType"></canvas>
         </div>
     </dash-card-content>
 </dash-card>

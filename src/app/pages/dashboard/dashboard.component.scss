@@ -58,3 +58,11 @@ header {
 .dash-messages-count-per-hour {
     margin-bottom: 1.2rem;
 }
+
+.msg-reply-count-n-others {
+    display: grid;
+    grid-template-columns: 2.4fr 1fr;
+    grid-column-gap: 1.2rem;
+    align-items: flex-start;
+    margin-bottom: 1.2rem;
+}

@@ -2,7 +2,7 @@
     <dash-card>
         <dash-card-header>
             <div class="header">
-                <span>Ultima mensagem enviada</span>
+                <span>Última mensagem enviada</span>
                 <mat-form-field class="form-field">
                     <mat-label>Selecione o canal</mat-label>
                     <mat-select (valueChange)="updateCurrentChannel($event)">
@@ -14,7 +14,8 @@
             </div>
         </dash-card-header>
         <dash-card-content>
-            <div *ngIf="(userLastSendedMessage$ | async)?.length > 0; else noContent">
+            <!-- *ngIf="(userLastSendedMessage$ | async)?.length > 0; else noContent" -->
+            <div>
                 <mat-list>
                     <ng-container *ngFor="let item of (userLastSendedMessage$ | async) | slice : currentPage * pageSize : (currentPage + 1) * pageSize ">
                         <div class="list-item">
@@ -26,7 +27,7 @@
                     </ng-container>
                 </mat-list>
             </div>
-            <ng-template #noContent>
+            <!-- <ng-template #noContent>
                 <div class="no-content">
                     <div *ngIf="(currentChannel$ | async); else noChannel">
                         <p>Parece que não foi encontrado nenhum dado :(</p>
@@ -36,13 +37,13 @@
                         <small>Selecione algum canal para ver os dados</small>
                     </ng-template>
                 </div>
-            </ng-template>
+            </ng-template> -->
         </dash-card-content>
         <dash-card-footer>
             <mat-paginator 
                 [hidePageSize]="true"
                 [length]="(userLastSendedMessage$ | async)?.length"
-                [pageSize]="8"
+                [pageSize]="pageSize"
                 (page)="updatePage($event)">
             </mat-paginator>
         </dash-card-footer>

@@ -25,6 +25,11 @@ export function filterByChannelId(messages: Message[], channelId: string) {
     return messages?.filter(m => m.channel == channelId)
 }
 
+export function filterByDate(msg:Message, startDate: moment.Moment, endDate: moment.Moment) {
+    const msgDate = convertToMoment(msg.timeSent);
+    return startDate <= msgDate && endDate >= msgDate;
+}
+
 export function groupByUsers(messages: Message[]): Map<string, Message[]> {
     return messages?.reduce((entryMap, msg) =>
         entryMap.set(msg.email, [...entryMap.get(msg.email) || [], msg]), new Map())

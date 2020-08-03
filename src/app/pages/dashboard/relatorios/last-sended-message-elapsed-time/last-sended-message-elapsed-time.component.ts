@@ -160,19 +160,19 @@ function millisecondsToElapsedTime(ms: number) {
   const elapsedWeeks = integerDivision(ms, weekInMs);
 
   if (elapsedWeeks > 0)
-    return `Ultima mensagem enviada em ${elapsedWeeks} semanas atrás`;
+    return `Última mensagem enviada há ${elapsedWeeks} semanas atrás`;
 
   const elapsedDays = integerDivision(ms, dayInMs);
 
   if (elapsedDays > 0)
-    return `Ultima mensagem enviada em ${elapsedDays} dias atrás`;
+    return `Última mensagem enviada há ${elapsedDays} dias atrás`;
 
   const elapsedHours = integerDivision(ms, hourInMs);
 
   if (elapsedHours > 0)
-    return `Ultima mensagem enviada em ${elapsedHours} horas atrás`;
+    return `Última mensagem enviada há ${elapsedHours} horas atrás`;
 
   const elapsedMinutes = integerDivision(ms, minuteInMs);
 
-  return `Ultima mensagem enviada em ${elapsedMinutes} minutos atrás`;
+  return `Última mensagem enviada há ${elapsedMinutes} minutos atrás`;
 }

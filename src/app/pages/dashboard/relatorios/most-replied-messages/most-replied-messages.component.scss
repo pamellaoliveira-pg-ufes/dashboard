@@ -1,0 +1,17 @@
+.list {
+  width: 100%;
+}
+.item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .6rem 1rem;
+  box-sizing: border-box;
+
+  .msg-info {
+      p {
+          margin: 0;
+      }
+  }
+}

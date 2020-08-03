@@ -12,9 +12,24 @@
                     </mat-select>
                 </mat-form-field>
             </div>
+            <div>
+                <mat-form-field style="margin-right: 1rem;">
+                    <mat-label>Data inicio</mat-label>
+                    <input matInput [formControl]="startDate" [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Data fim</mat-label>
+                    <input matInput [formControl]="endDate" [matDatepicker]="picker2">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </div>
         </dash-card-header>
         <dash-card-content>
-            <div *ngIf="(channelUsersMessagesCount$ | async)?.length > 0; else noContent">
+            <!-- *ngIf="(channelUsersMessagesCount$ | async)?.length > 0; else noContent" -->
+            <div>
                 <mat-list>
                     <ng-container
                         *ngFor="let item of (channelUsersMessagesCount$ | async) | slice : currentPage * pageSize : (currentPage + 1) * pageSize ">
@@ -25,7 +40,7 @@
                     </ng-container>
                 </mat-list>
             </div>
-            <ng-template #noContent>
+            <!-- <ng-template #noContent>
                 <div class="no-content">
                     <div *ngIf="(currentChannel$ | async); else noChannel">
                         <p>Parece que não foi encontrado nenhum dado :(</p>
@@ -35,11 +50,11 @@
                         <small>Selecione algum canal para ver os dados</small>
                     </ng-template>
                 </div>
-            </ng-template>
+            </ng-template> -->
 
         </dash-card-content>
         <dash-card-footer>
-            <mat-paginator [hidePageSize]="true" [length]="(channelUsersMessagesCount$ | async)?.length" [pageSize]="8"
+            <mat-paginator [hidePageSize]="true" [length]="(channelUsersMessagesCount$ | async)?.length" [pageSize]="pageSize"
                 (page)="updatePage($event)">
             </mat-paginator>
         </dash-card-footer>

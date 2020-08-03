@@ -1,28 +1,42 @@
+import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { MessageService } from 'src/app/core/services/message.service';
-import { UserService } from 'src/app/core/services/user.service';
-import { map, concatMap, tap } from 'rxjs/operators';
-import { of, combineLatest } from 'rxjs';
-import { User } from 'src/app/core/models/user';
+
+import { map, concatMap, tap, mergeMap, startWith } from 'rxjs/operators';
+import { of, combineLatest, BehaviorSubject, throwError } from 'rxjs';
+
+import * as moment from 'moment';
+
 import { ChartDataSets, ChartOptions, ChartYAxe, ChartXAxe } from 'chart.js';
-import { Label } from 'ng2-charts';
+
+import { User } from 'src/app/core/models/user';
+import { MessageService, filterByDate } from 'src/app/core/services/message.service';
+import { UserService } from 'src/app/core/services/user.service';
+
 
 @Component({
   selector: 'dash-most-tagged-users',
   templateUrl: './most-tagged-users.component.html',
-  styleUrls: ['./most-tagged-users.component.scss']
+  styleUrls: ['./most-tagged-users.component.scss'],
 })
 export class MostTaggedUsersComponent implements OnInit {
 
   isReady = false;
 
   data: ChartDataSets[];
-  xAx: ChartYAxe[]= [];
+  xAx: ChartYAxe[] = [];
 
-  mostTaggedUsers$ = this.messageService.getMessage()
+  startDate = new FormControl(moment().subtract(30, 'days'));
+  endDate = new FormControl(moment());
+
+  mostTaggedUsers$ = combineLatest(this.messageService.getMessage(),
+    this.startDate.valueChanges.pipe(startWith(moment().subtract(30, 'days'))), this.endDate.valueChanges.pipe(startWith(moment())))
     .pipe(
+      map(values => {
+        const messages = values[0];
+        return messages.filter(msg => filterByDate(msg, values[1], values[2]))
+      }),
       map(messages => messages.filter(msg => msg.taggedUsers?.length > 0)),
-      concatMap(messages => combineLatest(of(messages), this.userService.getUsers())),
+      mergeMap(messages => combineLatest(of(messages), this.userService.getUsers())),
       map(values => {
         const messages = values[0];
         const users = values[1];
@@ -35,9 +49,6 @@ export class MostTaggedUsersComponent implements OnInit {
           .forEach(taggedUserEmail => {
             const registry = taggedCount.filter(tc => tc.user.email == taggedUserEmail).pop();
 
-            if (taggedCount.length >= 10)
-              return;
-
             if (registry)
               registry.tagCount++;
             else {
@@ -46,21 +57,23 @@ export class MostTaggedUsersComponent implements OnInit {
             }
           });
 
-        return taggedCount;
+        return taggedCount
+          .sort((a,b) => {return b.tagCount - a.tagCount})
+          .slice(0, 10);
       }),
       tap(_ => this.isReady = true))
 
   public barChartOptions: ChartOptions = {
     responsive: true,
     // We use these empty structures as placeholders for dynamic theming.
-    scales: { 
+    scales: {
       xAxes: [{
         ticks: {
           beginAtZero: true,
           stepSize: 5,
         }
-      }], 
-      yAxes: [{}] 
+      }],
+      yAxes: [{}]
     },
     plugins: {
       datalabels: {
@@ -85,7 +98,7 @@ export class MostTaggedUsersComponent implements OnInit {
           .sort((a, b) => a.tagCount - b.tagCount)
           .pop();
 
-        this.xAx = split(biggest.tagCount, 5)
+        this.xAx = split(biggest?.tagCount, 5)
           .map(x => x as ChartXAxe);
 
         console.log(this.xAx);

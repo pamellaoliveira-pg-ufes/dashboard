@@ -22,6 +22,7 @@ import { MessagesInLastThirtyDaysCountComponent } from './pages/dashboard/relato
 import { ChannelUserCountComponent } from './pages/dashboard/relatorios/channel-user-count/channel-user-count.component';
 import { MessagesCountPerHourComponent } from './pages/dashboard/relatorios/messages-count-per-hour/messages-count-per-hour.component';
 import { MostMentionedByOwnerUsersComponent } from './pages/dashboard/relatorios/most-mentioned-by-owner-users/most-mentioned-by-owner-users.component';
+import { MostRepliedMessagesComponent } from './pages/dashboard/relatorios/most-replied-messages/most-replied-messages.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { MostMentionedByOwnerUsersComponent } from './pages/dashboard/relatorios
     MessagesInLastThirtyDaysCountComponent,
     ChannelUserCountComponent,
     MessagesCountPerHourComponent,
-    MostMentionedByOwnerUsersComponent
+    MostMentionedByOwnerUsersComponent,
+    MostRepliedMessagesComponent
   ],
   imports: [
     BrowserModule,

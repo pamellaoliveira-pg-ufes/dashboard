@@ -1,7 +1,7 @@
 <dash-card>
     <dash-card-header>
         <div class="header">
-            <span>Alunos mais acionados por mediador</span>
+            <span>Alunos mais acionados pelo proprietário do canal</span>
             <mat-form-field class="form-field">
                 <mat-label>Selecione o canal</mat-label>
                 <mat-select (valueChange)="updateCurrentChannel($event)">
@@ -9,6 +9,18 @@
                         {{ channel.title }}
                     </mat-option>
                 </mat-select>
+            </mat-form-field>
+            <mat-form-field style="margin-right: 1rem;">
+                <mat-label>Data inicio</mat-label>
+                <input matInput [formControl]="startDate" [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Data fim</mat-label>
+                <input matInput [formControl]="endDate" [matDatepicker]="picker2">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>
         </div>
     </dash-card-header>

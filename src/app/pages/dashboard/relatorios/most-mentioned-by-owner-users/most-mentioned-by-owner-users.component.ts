@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Channel } from 'src/app/core/models/channel';
 import { Subject, combineLatest, of } from 'rxjs';
-import { MessageService, groupByUsers } from 'src/app/core/services/message.service';
-import { map, mergeMap, tap, takeUntil } from 'rxjs/operators';
+import { MessageService, groupByUsers, filterByDate } from 'src/app/core/services/message.service';
+import { map, mergeMap, tap, takeUntil, startWith } from 'rxjs/operators';
 import { UserService } from 'src/app/core/services/user.service';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { ChannelService } from 'src/app/core/services/channel.service';
+import { FormControl } from '@angular/forms';
+import * as moment from 'moment';
 
 @Component({
   selector: 'dash-most-mentioned-by-owner-users',
@@ -22,18 +24,24 @@ export class MostMentionedByOwnerUsersComponent implements OnInit {
   private _currentChannel = new Subject<Channel>();
   currentChannel$ = this._currentChannel.asObservable();
   
+  startDate = new FormControl(moment().subtract(30, 'days'));
+  endDate = new FormControl(moment());
+
   channels$ = this.channelService
     .getChannels()
     .pipe(map(channels => channels.filter(c => c.type == "private")))
 
-  private $mostMentionedByOwnerUsers = combineLatest(this.messageService.getMessage(), this.currentChannel$)
+  private $mostMentionedByOwnerUsers = combineLatest(this.messageService.getMessage(), this.currentChannel$,
+  this.startDate.valueChanges.pipe(startWith(moment().subtract(30, 'days'))), this.endDate.valueChanges.pipe(startWith(moment())))
     .pipe(
       map(values => {
         const channel = values[1];
         const messages = values[0]
+          .filter(msg => filterByDate(msg, values[2], values[3]))
           .filter(msg => msg.channel == channel.id) //filtra por canal
           .filter(msg => msg.email == channel.owner) // filtra msg mandada pelo professor
           .filter(msg => msg.taggedUsers?.length > 0); // filtra se tiver usuários marcados
+          
 
           return { messages, channel };
       }),
@@ -58,7 +66,10 @@ export class MostMentionedByOwnerUsersComponent implements OnInit {
           else
             userEmailsCount.push({email, count: 1});
         });
-        return userEmailsCount;
+
+        return userEmailsCount
+          .sort((a,b) => {return b.count - a.count})
+          .slice(0, 10);
       }),
       mergeMap(userEmailsCount => {
         return combineLatest(of(userEmailsCount), this.userService.getUsers());

@@ -1,0 +1,47 @@
+<dash-card>
+    <dash-card-header>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            Mensagens mais respondidas
+            <mat-form-field class="form-field">
+                <mat-label>Selecione o canal</mat-label>
+                <mat-select (valueChange)="updateCurrentChannel($event)">
+                    <mat-option *ngFor="let channel of (channels$ | async)" [value]="channel">
+                        {{ channel.title }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <mat-form-field style="margin-right: 1rem;">
+            <mat-label>Data inicio</mat-label>
+            <input matInput [formControl]="startDate" [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Data fim</mat-label>
+            <input matInput [formControl]="endDate" [matDatepicker]="picker2">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+    </dash-card-header>
+    <dash-card-content>
+        <div>
+            <mat-list class="list">
+                <ng-container *ngFor="let item of (mostRepliedMessages$ | async)">
+                    <div class="list-item">
+
+                        <div class="item">
+                            <div class="msg-info">
+                                <strong>{{ item.userName }}</strong>
+                                <p>{{ item.msg }}</p>
+                            </div>
+                            <span> {{ item.replyCount }} </span>
+                        </div>
+
+                        <mat-divider></mat-divider>
+                    </div>
+                </ng-container>
+            </mat-list>
+        </div>
+    </dash-card-content>
+</dash-card>
